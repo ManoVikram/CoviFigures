@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
 
+import './screens/homeScreen.dart';
+import './screens/infoScreen.dart';
+
+import './config/constants.dart';
+
 class MyApp extends StatefulWidget {
   @override
   _MyAppState createState() => _MyAppState();
@@ -11,6 +16,15 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       title: "COVID 19",
       debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        fontFamily: "Poppins",
+        scaffoldBackgroundColor: kBackgroundColor,
+        textTheme: TextTheme(
+          bodyText1: TextStyle(
+            color: kBodyTextColor,
+          ),
+        ),
+      ),
       home: Covid19(),
     );
   }
@@ -19,7 +33,9 @@ class _MyAppState extends State<MyApp> {
 class Covid19 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: HomeScreen(),
+    );
   }
 }
 
