@@ -1,7 +1,8 @@
+import 'package:covid19_app/business_logic/blocs/covidCasesIndiaBloc/covid_cases_india_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import './screens/homeScreen.dart';
-import './screens/infoScreen.dart';
 
 import './config/constants.dart';
 
@@ -13,19 +14,22 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: "COVID 19",
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        fontFamily: "Poppins",
-        scaffoldBackgroundColor: kBackgroundColor,
-        textTheme: TextTheme(
-          bodyText1: TextStyle(
-            color: kBodyTextColor,
+    return BlocProvider<CovidCasesIndiaBloc>(
+      create: (_) => CovidCasesIndiaBloc(),
+      child: MaterialApp(
+        title: "COVID 19",
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          fontFamily: "Poppins",
+          scaffoldBackgroundColor: kBackgroundColor,
+          textTheme: TextTheme(
+            bodyText1: TextStyle(
+              color: kBodyTextColor,
+            ),
           ),
         ),
+        home: Covid19(),
       ),
-      home: Covid19(),
     );
   }
 }

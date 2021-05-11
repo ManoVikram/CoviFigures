@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../widgets/header.dart';
 import '../widgets/countryDropdownBox.dart';
 import '../widgets/counter.dart';
+import '../business_logic/blocs/covidCasesIndiaBloc/covid_cases_india_bloc.dart';
 
 import '../config/constants.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
+
     return Scaffold(
       body: SingleChildScrollView(
         physics: BouncingScrollPhysics(),
@@ -55,20 +64,20 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ),
                       Spacer(),
-                      Text(
+                      /* Text(
                         "See Details",
                         style: TextStyle(
                           color: kPrimaryColor,
                           fontWeight: FontWeight.w600,
                         ),
-                      ),
+                      ), */
                     ],
                   ),
                   SizedBox(
                     height: 20.0,
                   ),
                   Container(
-                    padding: EdgeInsets.all(20.0),
+                    padding: EdgeInsets.symmetric(vertical: 20.0),
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(26.0),
                       color: Colors.white,
@@ -80,25 +89,54 @@ class HomeScreen extends StatelessWidget {
                         ),
                       ],
                     ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Counter(
-                          number: 1807,
-                          title: "Infected",
-                          color: kInfectedColor,
-                        ),
-                        Counter(
-                          number: 102,
-                          title: "Deaths",
-                          color: kDeathColor,
-                        ),
-                        Counter(
-                          number: 204,
-                          title: "Recovered",
-                          color: kRecovercolor,
-                        ),
-                      ],
+                    child:
+                        BlocBuilder<CovidCasesIndiaBloc, CovidCasesIndiaState>(
+                      builder: (context, state) {
+                        if (state is CovidCasesWaiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        } else if (state is CovidCasesDone) {
+                          return SingleChildScrollView(
+                            physics: BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Counter(
+                                  // number: 1807,
+                                  number: state.covidCases.affected,
+                                  title: "Infected",
+                                  color: kInfectedColor,
+                                ),
+                                SizedBox(
+                                  width: size.width * 0.1,
+                                ),
+                                Counter(
+                                  // number: 102,
+                                  number: state.covidCases.death,
+                                  title: "Deaths",
+                                  color: kDeathColor,
+                                ),
+                                SizedBox(
+                                  width: size.width * 0.05,
+                                ),
+                                Counter(
+                                  // number: 204,
+                                  number: state.covidCases.recovered,
+                                  title: "Recovered",
+                                  color: kRecovercolor,
+                                ),
+                              ],
+                            ),
+                          );
+                        } else {
+                          return Center(
+                            child: Text(
+                                "Error while fetching data. Try again later."),
+                          );
+                        }
+                      },
                     ),
                   ),
                   Row(

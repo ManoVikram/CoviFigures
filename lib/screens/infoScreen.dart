@@ -17,7 +17,7 @@ class InfoScreen extends StatelessWidget {
               image: "assets/icons/coronadr.svg",
               textTop: "Get to know",
               textBottom: "about COVID-19",
-            ),
+            ),  
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
