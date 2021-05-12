@@ -1,10 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 import '../widgets/header.dart';
 import '../widgets/countryDropdownBox.dart';
 import '../widgets/counter.dart';
 import '../widgets/preventionCard.dart';
+import '../widgets/footer.dart';
+import '../widgets/vaccinationDetails.dart';
 import '../business_logic/blocs/covidCasesIndiaBloc/covid_cases_india_bloc.dart';
 
 import '../config/constants.dart';
@@ -18,6 +22,10 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+
+    Future<void> _launchURL(String url) async => await canLaunch(url)
+        ? await launch(url)
+        : throw 'Could not launch $url';
 
     return Scaffold(
       body: SingleChildScrollView(
@@ -167,15 +175,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                   PreventionCard(
                     image: "assets/images/wear_mask.png",
-                    title: "Wear Face Mask",
+                    title: "Wear Face Mask 😷",
                     description:
                         "Masks should be used as part of a comprehensive strategy of measures to suppress transmission and save lives.",
                   ),
                   PreventionCard(
                     image: "assets/images/wash_hands.png",
-                    title: "Wash Your Hands",
+                    title: "Wash Your Hands 🧼",
                     description:
                         "To stop the spread of COVID-19, the practice of handwashing at regular intervals is a must.",
+                  ),
+                  VaccintionDetails(),
+                  SizedBox(
+                    height: 10.0,
                   ),
                   /* Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -217,9 +229,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
               ),
             ),
+            Divider(),
+            Footer(
+              urlLauncher: _launchURL,
+            ),
+            SizedBox(
+              height: 20.0,
+            ),
           ],
         ),
       ),
     );
   }
 }
+
+
+
+
