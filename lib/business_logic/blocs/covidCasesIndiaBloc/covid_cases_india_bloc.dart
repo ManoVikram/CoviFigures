@@ -36,6 +36,7 @@ class CovidCasesIndiaBloc
           affected: extractedData[event.state]["confirmed"],
           recovered: extractedData[event.state]["recovered"],
           death: extractedData[event.state]["deaths"],
+          lastUpdated: extractedData["Delhi"]["updated"],
         );
 
         yield CovidCasesDone(

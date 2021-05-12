@@ -5,11 +5,13 @@ class StateCovidCases {
   final int affected;
   final int recovered;
   final int death;
+  final String lastUpdated;
 
-   StateCovidCases({
+  StateCovidCases({
     @required this.state,
     @required this.affected,
     @required this.recovered,
     @required this.death,
+    @required this.lastUpdated,
   });
 }

@@ -4,6 +4,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../widgets/header.dart';
 import '../widgets/countryDropdownBox.dart';
 import '../widgets/counter.dart';
+import '../widgets/preventionCard.dart';
 import '../business_logic/blocs/covidCasesIndiaBloc/covid_cases_india_bloc.dart';
 
 import '../config/constants.dart';
@@ -48,20 +49,35 @@ class _HomeScreenState extends State<HomeScreen> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Row(
                     children: [
-                      RichText(
-                        text: TextSpan(
-                          children: [
-                            TextSpan(
-                                text: "Case Update\n", style: kTitleTextstyle),
-                            TextSpan(
-                              text: "Newest Update April 15 2021",
-                              style: TextStyle(color: kTextLightColor),
-                            ),
-                          ],
-                        ),
+                      BlocBuilder<CovidCasesIndiaBloc, CovidCasesIndiaState>(
+                        builder: (context, state) {
+                          if (state is CovidCasesDone) {
+                            return RichText(
+                              text: TextSpan(
+                                children: [
+                                  TextSpan(
+                                      text: "Case Update\n",
+                                      style: kTitleTextstyle),
+                                  TextSpan(
+                                    text:
+                                        "Last Updated ${state.covidCases.lastUpdated}",
+                                    style: TextStyle(color: kTextLightColor),
+                                  ),
+                                ],
+                              ),
+                            );
+                          } else if (state is CovidCasesWaiting) {
+                            return Container();
+                          } else {
+                            return Center(
+                              child: Text("ERROR"),
+                            );
+                          }
+                        },
                       ),
                       Spacer(),
                       /* Text(
@@ -139,7 +155,29 @@ class _HomeScreenState extends State<HomeScreen> {
                       },
                     ),
                   ),
-                  Row(
+                  SizedBox(
+                    height: 10.0,
+                  ),
+                  Text(
+                    "Safety Measures",
+                    style: kTitleTextstyle,
+                  ),
+                  SizedBox(
+                    height: 20.0,
+                  ),
+                  PreventionCard(
+                    image: "assets/images/wear_mask.png",
+                    title: "Wear Face Mask",
+                    description:
+                        "Masks should be used as part of a comprehensive strategy of measures to suppress transmission and save lives.",
+                  ),
+                  PreventionCard(
+                    image: "assets/images/wash_hands.png",
+                    title: "Wash Your Hands",
+                    description:
+                        "To stop the spread of COVID-19, the practice of handwashing at regular intervals is a must.",
+                  ),
+                  /* Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       Text(
@@ -175,7 +213,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       "assets/images/map.png",
                       fit: BoxFit.contain,
                     ),
-                  ),
+                  ), */
                 ],
               ),
             ),

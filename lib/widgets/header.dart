@@ -47,7 +47,7 @@ class Header extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Align(
+            /* Align(
               alignment: Alignment.topRight,
               child: InkWell(
                 onTap: () {
@@ -60,7 +60,7 @@ class Header extends StatelessWidget {
                 },
                 child: SvgPicture.asset("assets/icons/menu.svg"),
               ),
-            ),
+            ), */
             SizedBox(
               height: 20.0,
             ),
