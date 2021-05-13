@@ -1,3 +1,4 @@
+import 'package:auto_size_text/auto_size_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -27,7 +28,7 @@ class Header extends StatelessWidget {
         padding: EdgeInsets.only(
           left: 40.0,
           top: 50.0,
-          right: 20.0,
+          right: 10.0,
         ),
         decoration: BoxDecoration(
           gradient: LinearGradient(
@@ -76,13 +77,22 @@ class Header extends StatelessWidget {
                   ),
                   Positioned(
                     top: 20,
-                    left: 160,
+                    left: 150,
                     child: Text(
                       "$textTop\n$textBottom",
                       style: kHeadingTextStyle.copyWith(
                         color: Colors.white,
                       ),
                     ),
+                    /* child: AutoSizeText(
+                      "$textTop\n$textBottom",
+                      style: kHeadingTextStyle.copyWith(
+                        color: Colors.white,
+                      ),
+                      minFontSize: 18,
+                      maxLines: 4,
+                      overflow: TextOverflow.ellipsis,
+                    ), */
                   ),
                   Container(),
                 ],
